@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="dev360 — Privacy Policies for our mobile games.">
+  <title>Privacy Policy — dev360</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Particle background canvas -->
+  <canvas id="particles"></canvas>
+
+  <!-- ═══════════ HEADER ═══════════ -->
+  <header id="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo" aria-label="dev360 Home">
+        <img src="assets/logo.svg" alt="dev360" width="32" height="32">
+        <span>dev<span class="logo-accent">360</span></span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav id="mainNav">
+        <a href="index.html">Home</a>
+        <a href="index.html#games">Games</a>
+        <a href="privacy-policy.html" class="active">Privacy Policy</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ═══════════ PRIVACY POLICY ═══════════ -->
+  <section id="privacy-page">
+    <div class="container">
+
+      <a href="index.html" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        Back to Home
+      </a>
+
+      <p class="section-label">Legal</p>
+      <h2>Privacy Policy</h2>
+      <p class="privacy-intro">Each of our games has its own privacy policy. Select a game below to view its privacy policy.</p>
+
+      <div class="privacy-list">
+
+        <!-- ──── GAME 1 ──── -->
+        <div class="privacy-card">
+          <div class="privacy-card-left">
+            <img src="assets/game-icon.svg" alt="Block Blast" class="privacy-game-icon">
+            <div>
+              <h3>Block Blast <span class="game-tagline">MASTER OF THE GRID</span></h3>
+              <p>Addictive block puzzle game — place, clear, and master the grid.</p>
+            </div>
+          </div>
+          <div class="privacy-card-right">
+            <!--  REPLACE THE href BELOW WITH YOUR ACTUAL PRIVACY POLICY URL  -->
+            <a href="https://ademthedeveloper.github.io/blockblastpuzzlegame-privacy-policy/" target="_blank" rel="noopener noreferrer" class="btn btn-privacy">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              View Privacy Policy
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" class="external-icon"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ──── GAME 2 (template — duplicate this block for more games) ────
+        <div class="privacy-card">
+          <div class="privacy-card-left">
+            <img src="assets/game-icon.svg" alt="Game Name" class="privacy-game-icon">
+            <div>
+              <h3>Your Game Name <span class="game-tagline">TAGLINE</span></h3>
+              <p>Short description of the game.</p>
+            </div>
+          </div>
+          <div class="privacy-card-right">
+            <a href="YOUR_PRIVACY_POLICY_URL_HERE" target="_blank" rel="noopener noreferrer" class="btn btn-privacy">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              View Privacy Policy
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" class="external-icon"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+        ──── END TEMPLATE ──── -->
+
+      </div>
+
+      <!-- General contact info -->
+      <div class="privacy-contact">
+        <p>For any questions regarding our privacy practices, contact us at:</p>
+        <a href="mailto:ademthedeveloper@gmail.com" class="contact-email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M2 7l10 7 10-7"/></svg>
+          ademthedeveloper@gmail.com
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer id="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="assets/logo.svg" alt="dev360" width="22" height="22">
+        <span>dev360</span>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 dev360. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
