@@ -1,1 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev360 - Mobile Game Studio</title>
+    <meta name="description" content="Dev360 - We create fun and addictive mobile games.">
+    <meta name="keywords" content="mobile games, game developer, indie games, android games">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='10' y='30' width='80' height='40' rx='8' fill='%23a855f7'/><rect x='15' y='35' width='20' height='30' rx='4' fill='%233b82f6'/><rect x='65' y='35' width='20' height='30' rx='4' fill='%233b82f6'/><circle cx='50' cy='50' r='10' fill='%231e1b4b'/><circle cx='50' cy='50' r='6' fill='%23a855f7'/></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f0f1a;
+            color: #e5e7eb;
+            line-height: 1.6;
+        }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
 
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(15, 15, 26, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a855f7, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .logo svg {
+            width: 40px;
+            height: 40px;
+        }
+        nav ul {
+            display: flex;
+            gap: 2rem;
+        }
+        nav a {
+            color: #9ca3af;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        nav a:hover { color: #a855f7; }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #e5e7eb;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at top, rgba(168, 85, 247, 0.15) 0%, transparent 60%),
+                        radial-gradient(ellipse at bottom right, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+        }
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(168, 85, 247, 0.4);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+        .hero-logo {
+            position: relative;
+            margin-bottom: 2rem;
+            animation: pulse 3s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .hero-logo svg {
+            width: 120px;
+            height: 120px;
+        }
+        .hero h1 {
+            position: relative;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #a855f7, #3b82f6, #a855f7);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        .hero p {
+            position: relative;
+            font-size: 1.25rem;
+            color: #9ca3af;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+        .cta-btn {
+            position: relative;
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #a855f7, #3b82f6);
+            color: white;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3);
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(168, 85, 247, 0.4);
+        }
+        .scroll-down {
+            position: absolute;
+            bottom: 2rem;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .section-title p {
+            color: #9ca3af;
+            font-size: 1.1rem;
+        }
+
+        /* Games */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .game-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: #a855f7;
+            box-shadow: 0 20px 60px rgba(168, 85, 247, 0.2);
+        }
+        .game-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        .game-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .game-card p {
+            color: #9ca3af;
+            margin-bottom: 1.5rem;
+        }
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .download-btn:hover {
+            background: #3b82f6;
+            color: white;
+        }
+        .coming-soon {
+            background: rgba(168, 85, 247, 0.1);
+            color: #a855f7;
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+
+        /* About */
+        .about-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .about-content p {
+            color: #9ca3af;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a855f7, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label {
+            color: #9ca3af;
+            margin-top: 0.5rem;
+        }
+
+        /* Privacy Policy Selection */
+        .privacy-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .privacy-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .privacy-card:hover {
+            transform: translateY(-3px);
+            border-color: #a855f7;
+            background: rgba(168, 85, 247, 0.1);
+        }
+        .privacy-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .privacy-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .privacy-card p {
+            color: #9ca3af;
+            font-size: 0.95rem;
+        }
+
+        /* Privacy Policy Page (Hidden by default) */
+        .privacy-page {
+            display: none;
+        }
+        .privacy-page.active {
+            display: block;
+        }
+        .policy-content {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(168, 85, 247, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .policy-content h2 {
+            font-size: 1.75rem;
+            margin: 1.5rem 0 1rem;
+            color: #a855f7;
+        }
+        .policy-content p {
+            color: #9ca3af;
+            margin-bottom: 1rem;
+        }
+        .policy-date {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            color: #a855f7;
+            font-weight: 500;
+        }
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* Contact */
+        .contact-content {
+            text-align: center;
+        }
+        .contact-email {
+            font-size: 1.5rem;
+            color: #a855f7;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .social-link {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 50%;
+            transition: all 0.3s;
+            font-size: 1.25rem;
+        }
+        .social-link:hover {
+            background: linear-gradient(135deg, #a855f7, #3b82f6);
+            border-color: transparent;
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 15, 26, 0.95);
+            border-top: 1px solid rgba(168, 85, 247, 0.1);
+            padding: 3rem 2rem;
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .footer-brand .logo {
+            margin-bottom: 1rem;
+        }
+        .footer-brand p {
+            color: #9ca3af;
+            font-size: 0.95rem;
+        }
+        .footer-links h4 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .footer-links ul li {
+            margin-bottom: 0.5rem;
+        }
+        .footer-links a {
+            color: #9ca3af;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: #a855f7;
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(168, 85, 247, 0.1);
+            color: #6b7280;
+        }
+
+        /* Mobile Menu */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: rgba(15, 15, 26, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+        }
+        .mobile-nav.active { display: block; }
+        .mobile-nav ul { flex-direction: column; gap: 1rem; }
+        .mobile-nav a { display: block; padding: 0.75rem; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .mobile-menu-btn { display: block; }
+            .mobile-nav { display: none; }
+            .hero h1 { font-size: 2rem; }
+            .section-title h2 { font-size: 1.75rem; }
+            .footer-inner { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-inner">
+            <a href="#home" class="logo">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="30" width="80" height="40" rx="8" fill="#a855f7"/>
+                    <rect x="15" y="35" width="20" height="30" rx="4" fill="#3b82f6"/>
+                    <rect x="65" y="35" width="20" height="30" rx="4" fill="#3b82f6"/>
+                    <circle cx="50" cy="50" r="10" fill="#1e1b4b"/>
+                    <circle cx="50" cy="50" r="6" fill="#a855f7"/>
+                </svg>
+                Dev360
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#games">Games</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        </div>
+    </header>
+    <div class="mobile-nav" id="mobileNav">
+        <ul>
+            <li><a href="#home" onclick="toggleMenu()">Home</a></li>
+            <li><a href="#games" onclick="toggleMenu()">Games</a></li>
+            <li><a href="#privacy" onclick="toggleMenu()">Privacy Policy</a></li>
+            <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div class="hero-gradient"></div>
+        <div class="particles" id="particles"></div>
+        <div class="hero-logo">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="30" width="80" height="40" rx="8" fill="#a855f7"/>
+                <rect x="15" y="35" width="20" height="30" rx="4" fill="#3b82f6"/>
+                <rect x="65" y="35" width="20" height="30" rx="4" fill="#3b82f6"/>
+                <circle cx="50" cy="50" r="10" fill="#1e1b4b"/>
+                <circle cx="50" cy="50" r="6" fill="#a855f7"/>
+            </svg>
+        </div>
+        <h1>Dev360</h1>
+        <p>We create fun and addictive mobile games.</p>
+        <a href="#games" class="cta-btn">View Our Games</a>
+        <div class="scroll-down">↓</div>
+    </section>
+
+    <!-- Games -->
+    <section id="games">
+        <div class="section-title">
+            <h2>Our Games</h2>
+            <p>Simple, engaging experiences for everyone</p>
+        </div>
+        <div class="games-grid">
+            <div class="game-card">
+                <div class="game-icon" style="background: linear-gradient(135deg, #a855f7, #c084fc);">
+                    🎮
+                </div>
+                <h3>Game 1</h3>
+                <p>An exciting new game coming soon! Stay tuned for updates.</p>
+                <span class="download-btn coming-soon">🚀 Coming Soon</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+        <div class="section-title">
+            <h2>About Us</h2>
+            <p>Who we are</p>
+        </div>
+        <div class="about-content">
+            <p>We are an independent mobile game developer focused on creating simple, engaging experiences for players around the world.</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Games In Development</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Fun Ahead</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Passion</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy Policy Selection -->
+    <section id="privacy">
+        <div class="section-title">
+            <h2>Privacy Policy</h2>
+            <p>Select a privacy policy to view</p>
+        </div>
+        <div id="privacySelection" class="privacy-selection">
+            <div class="privacy-card" onclick="showPrivacy('website')">
+                <div class="icon">🌐</div>
+                <h3>Website Privacy Policy</h3>
+                <p>Privacy policy for dev360.github.io</p>
+            </div>
+            <div class="privacy-card" onclick="showPrivacy('game1')">
+                <div class="icon">🎮</div>
+                <h3>Game 1 Privacy Policy</h3>
+                <p>Privacy policy for our first game</p>
+            </div>
+            <div class="privacy-card" onclick="showPrivacy('game2')">
+                <div class="icon">🎮</div>
+                <h3>Game 2 Privacy Policy</h3>
+                <p>Privacy policy for our second game</p>
+            </div>
+            <div class="privacy-card" onclick="showPrivacy('game3')">
+                <div class="icon">🎮</div>
+                <h3>Game 3 Privacy Policy</h3>
+                <p>Privacy policy for our third game</p>
+            </div>
+        </div>
+
+        <!-- Website Privacy Policy -->
+        <div id="privacyWebsite" class="privacy-page">
+            <a href="#privacy" class="back-btn" onclick="hidePrivacy()">← Back to Policies</a>
+            <div class="section-title">
+                <h2>Website Privacy Policy</h2>
+                <p class="policy-date">Last Updated: January 2026</p>
+            </div>
+            <div class="policy-content">
+                <h2>1. Introduction</h2>
+                <p>This Privacy Policy describes how we collect, use, and protect your personal information when you visit our website dev360.github.io (the "Website").</p>
+                
+                <h2>2. Information We Collect</h2>
+                <p>We may collect the following types of information: usage data, browser type, device information, IP address, and any information you voluntarily provide through contact forms.</p>
+                
+                <h2>3. How We Use Your Information</h2>
+                <p>Your information is used to improve our website, analyze traffic patterns, respond to your inquiries, and provide a better user experience.</p>
+                
+                <h2>4. Cookies</h2>
+                <p>We may use cookies to enhance your browsing experience, analyze site traffic, and personalize content. You can disable cookies in your browser settings.</p>
+                
+                <h2>5. Third-Party Services</h2>
+                <p>We may use third-party services such as analytics tools that collect anonymous usage data to help improve our website.</p>
+                
+                <h2>6. Data Security</h2>
+                <p>We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+                
+                <h2>7. Your Rights</h2>
+                <p>You have the right to access, correct, or delete your personal data. Contact us if you wish to exercise these rights.</p>
+                
+                <h2>8. Contact Us</h2>
+                <p>For any privacy-related questions, contact us at: ademthedeveloper@gmail.com</p>
+            </div>
+        </div>
+
+        <!-- Game 1 Privacy Policy -->
+        <div id="privacyGame1" class="privacy-page">
+            <a href="#privacy" class="back-btn" onclick="hidePrivacy()">← Back to Policies</a>
+            <div class="section-title">
+                <h2>Game 1 Privacy Policy</h2>
+                <p class="policy-date">Last Updated: January 2026</p>
+            </div>
+            <div class="policy-content">
+                <h2>1. Introduction</h2>
+                <p>This Privacy Policy applies to our mobile game "Game 1" and describes how we handle your personal information within the app.</p>
+                
+                <h2>2. Information We Collect</h2>
+                <p>We collect: device information, game progress, crash logs, and usage statistics. No personal identifiers such as name or phone number are collected without your consent.</p>
+                
+                <h2>3. Analytics</h2>
+                <p>We use Firebase Analytics to understand how players interact with our game. This data helps us improve the gaming experience and fix bugs.</p>
+                
+                <h2>4. Advertising</h2>
+                <p>Our app may display ads through Google AdMob. AdMob may collect certain information to serve relevant advertisements based on your interests.</p>
+                
+                <h2>5. Data Storage</h2>
+                <p>Your game progress is stored locally on your device. We do not store personal data on our servers unless required for gameplay.</p>
+                
+                <h2>6. Children's Privacy</h2>
+                <p>Our app is suitable for all ages. We do not knowingly collect personal information from children under 13 without parental consent.</p>
+                
+                <h2>7. Changes to This Policy</h2>
+                <p>We may update this privacy policy from time to time. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+                
+                <h2>8. Contact Us</h2>
+                <p>For privacy inquiries: ademthedeveloper@gmail.com</p>
+            </div>
+        </div>
+
+        <!-- Game 2 Privacy Policy -->
+        <div id="privacyGame2" class="privacy-page">
+            <a href="#privacy" class="back-btn" onclick="hidePrivacy()">← Back to Policies</a>
+            <div class="section-title">
+                <h2>Game 2 Privacy Policy</h2>
+                <p class="policy-date">Last Updated: January 2026</p>
+            </div>
+            <div class="policy-content">
+                <h2>1. Introduction</h2>
+                <p>This Privacy Policy applies to our mobile game "Game 2" and describes how we handle your personal information within the app.</p>
+                
+                <h2>2. Information We Collect</h2>
+                <p>We collect: device information, game progress, crash logs, and usage statistics. No personal identifiers such as name or phone number are collected without your consent.</p>
+                
+                <h2>3. Analytics</h2>
+                <p>We use Firebase Analytics to understand how players interact with our game. This data helps us improve the gaming experience and fix bugs.</p>
+                
+                <h2>4. Advertising</h2>
+                <p>Our app may display ads through Google AdMob. AdMob may collect certain information to serve relevant advertisements based on your interests.</p>
+                
+                <h2>5. Data Storage</h2>
+                <p>Your game progress is stored locally on your device. We do not store personal data on our servers unless required for gameplay.</p>
+                
+                <h2>6. Children's Privacy</h2>
+                <p>Our app is suitable for all ages. We do not knowingly collect personal information from children under 13 without parental consent.</p>
+                
+                <h2>7. Changes to This Policy</h2>
+                <p>We may update this privacy policy from time to time. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+                
+                <h2>8. Contact Us</h2>
+                <p>For privacy inquiries: ademthedeveloper@gmail.com</p>
+            </div>
+        </div>
+
+        <!-- Game 3 Privacy Policy -->
+        <div id="privacyGame3" class="privacy-page">
+            <a href="#privacy" class="back-btn" onclick="hidePrivacy()">← Back to Policies</a>
+            <div class="section-title">
+                <h2>Game 3 Privacy Policy</h2>
+                <p class="policy-date">Last Updated: January 2026</p>
+            </div>
+            <div class="policy-content">
+                <h2>1. Introduction</h2>
+                <p>This Privacy Policy applies to our mobile game "Game 3" and describes how we handle your personal information within the app.</p>
+                
+                <h2>2. Information We Collect</h2>
+                <p>We collect: device information, game progress, crash logs, and usage statistics. No personal identifiers such as name or phone number are collected without your consent.</p>
+                
+                <h2>3. Analytics</h2>
+                <p>We use Firebase Analytics to understand how players interact with our game. This data helps us improve the gaming experience and fix bugs.</p>
+                
+                <h2>4. Advertising</h2>
+                <p>Our app may display ads through Google AdMob. AdMob may collect certain information to serve relevant advertisements based on your interests.</p>
+                
+                <h2>5. Data Storage</h2>
+                <p>Your game progress is stored locally on your device. We do not store personal data on our servers unless required for gameplay.</p>
+                
+                <h2>6. Children's Privacy</h2>
+                <p>Our app is suitable for all ages. We do not knowingly collect personal information from children under 13 without parental consent.</p>
+                
+                <h2>7. Changes to This Policy</h2>
+                <p>We may update this privacy policy from time to time. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+                
+                <h2>8. Contact Us</h2>
+                <p>For privacy inquiries: ademthedeveloper@gmail.com</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="section-title">
+            <h2>Contact Us</h2>
+            <p>Get in touch</p>
+        </div>
+        <div class="contact-content">
+            <a href="mailto:ademthedeveloper@gmail.com" class="contact-email">ademthedeveloper@gmail.com</a>
+            <p>We'd love to hear from you! Send us a message anytime.</p>
+            <div class="social-links">
+                <a href="#" class="social-link">𝕏</a>
+                <a href="#" class="social-link">💬</a>
+                <a href="#" class="social-link">📱</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="logo">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+                        <rect x="10" y="30" width="80" height="40" rx="8" fill="#a855f7"/>
+                        <rect x="15" y="35" width="20" height="30" rx="4" fill="#3b82f6"/>
+                        <rect x="65" y="35" width="20" height="30" rx="4" fill="#3b82f6"/>
+                        <circle cx="50" cy="50" r="10" fill="#1e1b4b"/>
+                        <circle cx="50" cy="50" r="6" fill="#a855f7"/>
+                    </svg>
+                    Dev360
+                </div>
+                <p>Creating fun and addictive mobile games for everyone.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#games">Games</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="mailto:ademthedeveloper@gmail.com">ademthedeveloper@gmail.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Dev360. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu
+        function toggleMenu() {
+            document.getElementById('mobileNav').classList.toggle('active');
+        }
+
+        // Privacy Policy
+        function showPrivacy(type) {
+            document.getElementById('privacySelection').style.display = 'none';
+            document.querySelectorAll('.privacy-page').forEach(p => p.classList.remove('active'));
+            
+            const map = {
+                'website': 'privacyWebsite',
+                'game1': 'privacyGame1', 
+                'game2': 'privacyGame2',
+                'game3': 'privacyGame3'
+            };
+            
+            document.getElementById(map[type]).classList.add('active');
+        }
+
+        function hidePrivacy() {
+            document.getElementById('privacySelection').style.display = 'grid';
+            document.querySelectorAll('.privacy-page').forEach(p => p.classList.remove('active'));
+        }
+
+        // Particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+</body>
+</html>
